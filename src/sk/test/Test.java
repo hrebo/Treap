@@ -2,8 +2,8 @@ package sk.test;
 
 import java.util.LinkedList;
 import java.util.Random;
-import sk.structure.Node;
-import sk.structure.Treap;
+import sk.structure.treap.Node;
+import sk.structure.treap.Treap;
 
 /**
  *
