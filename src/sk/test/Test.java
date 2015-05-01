@@ -12,7 +12,7 @@ import sk.structure.treap.Treap;
  */
 public class Test {
     
-     public static void main(String[] args) {
+    /** public static void main(String[] args) {
         // TODO code application logic here
         Treap strom = new Treap();
         LinkedList<NumberElement> numberElements = new LinkedList<>();
@@ -66,5 +66,5 @@ public class Test {
         System.out.println("Check treap:");
         strom.checkTreap(strom.getRoot());
 
-    }
+    }**/
 }

@@ -34,7 +34,52 @@ public class NodeQTree {
         this.SW_node = null;
         this.father_node = null;
     }
+    
+    public NodeQTree(Point point, double x_coordinat_max, double y_coordinate_max){
+        this.point = point;
+        this.x_coordinate_max = x_coordinate_max;
+        this.y_coordinate_max = y_coordinate_max;
+        
+        this.x_coordinate_min = 0.0;
+        this.y_coordinate_min = 0.0;
+        
+        this.NW_node = null;
+        this.NE_node = null;
+        this.SE_node = null;
+        this.SW_node = null;
+        this.father_node = null;
+    }
 
+    /**
+     * 
+     * @param iPoint
+     * @return true = same object
+     * @return false = different object
+     */
+    public boolean comparePoint(Point iPoint){
+        if((this.point.getX_coordinate() == iPoint.getX_coordinate()) &&
+                (this.point.getY_coordinate() == iPoint.getY_coordinate())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    /**
+     * 
+     * @param iPoint
+     * @return true = same object
+     * @return false = different object
+     */
+    public boolean comparePoint(double x, double y){
+        if((this.point.getX_coordinate() == x) &&
+                (this.point.getY_coordinate() == y)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
     public NodeQTree getNW_node() {
         return NW_node;
     }
