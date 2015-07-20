@@ -17,12 +17,17 @@ public class Test_quadTree {
     
     public static void main(String[] args){
         
-        QuadTree qt = new QuadTree(10, 10);
+        QuadTree qt = new QuadTree(6, 6);
         
-        qt.insertNode(new NodeQTree(new Point(2.0, 2.0, "bod1"), 10.0, 10.0));
+        qt.insertNode(new NodeQTree(new Point(2.0, 2.0, "bod1"), 6, 6));
+        qt.insertNode(new NodeQTree(new Point(2.0, 4.0, "bod1"), 6, 6));
+        qt.insertNode(new NodeQTree(new Point(4.0, 2.0, "bod1"), 6, 6));
+        qt.insertNode(new NodeQTree(new Point(4.0, 4.0, "bod1"), 6, 6));
         
         if( qt.existNode(2.0, 2.0)){
             System.out.println("Existuje");
+        }else{
+            System.out.println("Neexistuje");
         }
     }
     

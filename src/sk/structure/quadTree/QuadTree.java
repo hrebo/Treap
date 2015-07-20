@@ -41,72 +41,70 @@ public class QuadTree {
         while(!inserted){
             //find area where we can add node 
             //1. area => NW
-            if((iNode.getPoint().getX_coordinate() <= (tempNode.getX_coordinate_max() / 2)) &&
-                    (iNode.getPoint().getY_coordinate() >= (tempNode.getY_coordinate_max() / 2))){
-                //check if are is empty
+            if((iNode.getPoint().getX_coordinate() <= tempNode.getX_coordinate_max() / 2) &&
+                    (iNode.getPoint().getY_coordinate() > tempNode.getY_coordinate_max() / 2)){
                 if(tempNode.getNW_node() == null){
-                    //set iNode value
-                    iNode.setX_coordinate_min(tempNode.getX_coordinate_min());
-                    iNode.setY_coordinate_min(tempNode.getY_coordinate_min());
                     iNode.setX_coordinate_max(tempNode.getX_coordinate_max() / 2);
-                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max() / 2);
-                    iNode.setFather_node(tempNode);
+                    iNode.setX_coordinate_min(tempNode.getX_coordinate_min());
+                    
+                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max());
+                    iNode.setY_coordinate_min(tempNode.getY_coordinate_max() / 2);
                     
                     tempNode.setNW_node(iNode);
                     inserted = true;
                 }else{
-                    //we need split area
+                    //we need split
                     tempNode = tempNode.getNW_node();
                 }
-                //2. area => NE
-            }else if ((iNode.getPoint().getX_coordinate() > (tempNode.getX_coordinate_max() / 2)) &&
-                    (iNode.getPoint().getY_coordinate() > (tempNode.getY_coordinate_max() / 2))){
+                //2. are => NE
+            }else if( (iNode.getPoint().getX_coordinate() > tempNode.getX_coordinate_max() / 2) &&
+                    (iNode.getPoint().getY_coordinate() > tempNode.getY_coordinate_max() / 2)){
                 if(tempNode.getNE_node() == null){
-                    //set iNode value
-                    iNode.setX_coordinate_min(tempNode.getX_coordinate_max() / 2);
-                    iNode.setY_coordinate_min(tempNode.getY_coordinate_max() / 2);
                     iNode.setX_coordinate_max(tempNode.getX_coordinate_max());
-                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max());
-                    iNode.setFather_node(tempNode);
+                    iNode.setX_coordinate_min(tempNode.getX_coordinate_max() / 2);
                     
-                    tempNode.setNE_node(iNode);
+                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max());
+                    iNode.setY_coordinate_min(tempNode.getY_coordinate_max() / 2);
+                    
+                    tempNode.setNW_node(iNode);
                     inserted = true;
                 }else{
+                    //we need split
                     tempNode = tempNode.getNE_node();
                 }
                 //3. area => SE
-            }else if ((iNode.getPoint().getX_coordinate() >= (tempNode.getX_coordinate_max() / 2)) &&
-                    (iNode.getPoint().getY_coordinate() <= (tempNode.getY_coordinate_max() / 2))){
+            }else if( (iNode.getPoint().getX_coordinate() > tempNode.getX_coordinate_max() / 2) &&
+                    (iNode.getPoint().getY_coordinate() < tempNode.getY_coordinate_max() / 2) ){
                 if(tempNode.getSE_node() == null){
-                    //set iNode value
-                    iNode.setX_coordinate_min(tempNode.getX_coordinate_max() / 2);
-                    iNode.setY_coordinate_min(tempNode.getY_coordinate_max() / 2);
                     iNode.setX_coordinate_max(tempNode.getX_coordinate_max());
-                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max());
-                    iNode.setFather_node(tempNode);
+                    iNode.setX_coordinate_min(tempNode.getX_coordinate_max() / 2);
+                    
+                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max() / 2);
+                    iNode.setY_coordinate_min(tempNode.getY_coordinate_min());
                     
                     tempNode.setSE_node(iNode);
                     inserted = true;
                 }else{
+                    //we need split
                     tempNode = tempNode.getSE_node();
                 }
                 //4. area => SW
-            }else if ((iNode.getPoint().getX_coordinate() < (tempNode.getX_coordinate_max() / 2)) &&
-                    (iNode.getPoint().getY_coordinate() < (tempNode.getY_coordinate_max() / 2))){ 
+            }else if( (iNode.getPoint().getX_coordinate() < tempNode.getX_coordinate_max() / 2) &&
+                    (iNode.getPoint().getY_coordinate() < tempNode.getY_coordinate_max() / 2) ){
                 if(tempNode.getSW_node() == null){
-                    //set iNode value
-                    iNode.setX_coordinate_min(tempNode.getX_coordinate_min());
-                    iNode.setY_coordinate_min(tempNode.getY_coordinate_min());
                     iNode.setX_coordinate_max(tempNode.getX_coordinate_max() / 2);
-                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max() / 2);
-                    iNode.setFather_node(tempNode);
+                    iNode.setX_coordinate_min(tempNode.getX_coordinate_min());
                     
-                    tempNode.setSW_node(iNode);
+                    iNode.setY_coordinate_max(tempNode.getY_coordinate_max() / 2);
+                    iNode.setY_coordinate_min(tempNode.getY_coordinate_min());
+                    
+                    tempNode.setSE_node(iNode);
                     inserted = true;
                 }else{
+                    //we need split
                     tempNode = tempNode.getSW_node();
                 }
-            }            
+            }
         }
         return true;
     }
@@ -149,11 +147,12 @@ public class QuadTree {
      */
     public boolean existNode(double iX_coordinate, double iY_coordinate){
         NodeQTree tempNode = this.getRoot();
-        
+        //TODO - dorobit rozdelenie arealu
         while(true){
             
-            if(this.isEmptyNode(tempNode)){
+            if(isEmptyNode(tempNode)){
                 return false;
+                //1. area
             }else if((iX_coordinate <= (tempNode.getX_coordinate_max() / 2)) &&
                     (iY_coordinate >= (tempNode.getY_coordinate_max() / 2)) &&
                     (iX_coordinate >= (tempNode.getX_coordinate_min())) &&
@@ -165,6 +164,31 @@ public class QuadTree {
                 }else{
                     tempNode = tempNode.getNW_node();
                 }
+                //2.area
+            }else if((iX_coordinate > (tempNode.getX_coordinate_max() / 2)) &&
+                    (iY_coordinate > (tempNode.getY_coordinate_max() / 2)) &&
+                    (iX_coordinate >= (tempNode.getX_coordinate_max())) &&
+                    iY_coordinate >= (tempNode.getY_coordinate_max())){
+                if(tempNode.getNE_node() == null){
+                    return false;
+                }else if(tempNode.comparePoint(iX_coordinate, iY_coordinate)){
+                    return true;
+                }else{
+                    tempNode = tempNode.getNE_node();
+                }
+                //3.area
+            }else if((iX_coordinate > (tempNode.getX_coordinate_max() / 2)) &&
+                    (iY_coordinate > (tempNode.getY_coordinate_max() / 2)) &&
+                    (iX_coordinate >= (tempNode.getX_coordinate_min())) &&
+                    iY_coordinate >= (tempNode.getY_coordinate_min())){
+                if(tempNode.getSE_node() == null){
+                    return false;
+                }else if(tempNode.comparePoint(iX_coordinate, iY_coordinate)){
+                    return true;
+                }else{
+                    tempNode = tempNode.getSE_node();
+                }
+                //4.area
             }else if((iX_coordinate > (tempNode.getX_coordinate_max() / 2)) &&
                     (iY_coordinate > (tempNode.getY_coordinate_max() / 2)) &&
                     (iX_coordinate >= (tempNode.getX_coordinate_min())) &&
@@ -186,7 +210,7 @@ public class QuadTree {
      * @param iNode
      * @return 
      */
-    public boolean isEmpty(NodeQTree iNode){        
+    private boolean isEmpty(NodeQTree iNode){        
         if(iNode == null){
             return true;
         }else{

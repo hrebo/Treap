@@ -35,7 +35,7 @@ public class NodeQTree {
         this.father_node = null;
     }
     
-    public NodeQTree(Point point, double x_coordinat_max, double y_coordinate_max){
+    public NodeQTree(Point point, double x_coordinate_max, double y_coordinate_max){
         this.point = point;
         this.x_coordinate_max = x_coordinate_max;
         this.y_coordinate_max = y_coordinate_max;
